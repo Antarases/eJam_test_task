@@ -1,0 +1,47 @@
+.deploymentContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+  border-bottom: 1px solid black;
+
+  .deploymentInfoContainer {
+    display: inline-block;
+    flex: 1 1 auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    .deploymentInfoItem {
+      margin: 0 20px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .text {
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      .value {
+        margin-left: 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .deleteButtonContainer  {
+    flex: 0 0 auto;
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 576px){
+  .deploymentContainer {
+    flex-direction: column;
+
+    .deleteButtonContainer {
+      display: block;
+      margin-top: 12px;
+    }
+  }
+}
