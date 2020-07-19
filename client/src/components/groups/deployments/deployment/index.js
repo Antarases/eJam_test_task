@@ -1,4 +1,5 @@
 import React  from "react";
+import classnames from "classnames";
 
 import { Button } from "reactstrap";
 
@@ -25,7 +26,7 @@ const Deployment = ({ deployment }) => {
                     <a href={deployment.url} className={styles.value}>{deployment.url}</a>
                 </div>
 
-                <div className={styles.deploymentInfoItem}>
+                <div className={classnames(styles.deploymentInfoItem, styles.deploymentDate)}>
                     <span className={styles.text}>Deployment date:</span>
                     <span className={styles.value}>{new Date(deployment.deployedAt).toLocaleString()}</span>
                 </div>
