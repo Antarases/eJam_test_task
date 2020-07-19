@@ -24,6 +24,11 @@ const Deployment = ({ deployment }) => {
                     <span className={styles.text}>Url:</span>
                     <a href={deployment.url} className={styles.value}>{deployment.url}</a>
                 </div>
+
+                <div className={styles.deploymentInfoItem}>
+                    <span className={styles.text}>Deployment date:</span>
+                    <span className={styles.value}>{new Date(deployment.deployedAt).toLocaleString()}</span>
+                </div>
             </section>
 
             <section className={styles.deleteButtonContainer}>
