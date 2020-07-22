@@ -4,7 +4,14 @@ import { connect } from "react-redux";
 import Countdown from "../../../commons/countdown";
 import { Container, Row, Col } from "reactstrap";
 
-const DeploymentAdditionCountdownList = ({ deploymentAdditionCountdowns }) => {
+import { RootStateType } from "../../../../reducers";
+import { DeploymentAdditionCountdownType } from "../../../../types/deploymentAdditionCountdownType";
+
+type MapStatePropsType = {
+    deploymentAdditionCountdowns: Record<string, DeploymentAdditionCountdownType>
+};
+
+const DeploymentAdditionCountdownList: React.FC<MapStatePropsType> = ({ deploymentAdditionCountdowns }) => {
     return (
         <Container tag="section">
             <Row>
@@ -23,13 +30,10 @@ const DeploymentAdditionCountdownList = ({ deploymentAdditionCountdowns }) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType): MapStatePropsType => {
     return {
         deploymentAdditionCountdowns: state.deploymentAdditionCountdowns.deploymentAdditionCountdowns
     };
 };
 
 export default connect(mapStateToProps)(DeploymentAdditionCountdownList);
-
-
-

@@ -1,13 +1,15 @@
 import axios from "axios";
 import { dispatch } from "../store/configureStore";
 
-export const getDeploymentTemplates = async () => {
+import { DeploymentTemplateType, DeploymentTemplatesResponseType } from "../types/deploymentTemplateType";
+
+export const getDeploymentTemplates: () => Promise<void> = async () => {
     try {
         dispatch({ type: "DEPLOYMENT_TEMPLATES__SET_IS_DEPLOYMENT_TEMPLATES_LOADING", isDeploymentTemplatesLoading: true });
 
-        const res = await axios.get("/deploymentTemplates");
+        const res = await axios.get<DeploymentTemplatesResponseType>("/deploymentTemplates");
 
-        const deploymentTemplates = res.data.deploymentTemplates.reduce((map, obj) => {
+        const deploymentTemplates: Record<string, DeploymentTemplateType> = res.data.deploymentTemplates.reduce((map, obj) => {
             map[obj.id] = obj;
 
             return map;

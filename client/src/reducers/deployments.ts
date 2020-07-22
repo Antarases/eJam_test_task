@@ -1,9 +1,16 @@
-const initialState = {
+import { DeploymentType } from "../types/deploymentType";
+
+export type DeploymentsStateType = {
+    deployments: Record<string, DeploymentType>;
+    isDeploymentsLoading: boolean;
+}
+
+const initialState: DeploymentsStateType = {
     deployments: {},
     isDeploymentsLoading: true
 };
 
-export default function deployment(state = initialState, action ) {
+export default function deployments(state: DeploymentsStateType = initialState, action ): DeploymentsStateType {
     switch (action.type) {
         case "DEPLOYMENTS__SET_DEPLOYMENTS": {
             return {
@@ -47,5 +54,3 @@ export default function deployment(state = initialState, action ) {
             return state;
     }
 };
-
-

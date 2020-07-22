@@ -1,14 +1,23 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect  } from "react-redux";
 
 import Deployment from "../deployment";
 import { Container, Row, Col } from "reactstrap";
 
 import { getDeployments } from "../../../../actions/deploymentActions";
 
+// @ts-ignore
 import styles from "./deployment-list.module.scss";
 
-const DeploymentList = ({ deployments, isDeploymentsLoading }) => {
+import { RootStateType } from "../../../../reducers";
+import { DeploymentType } from "../../../../types/deploymentType";
+
+type MapStatePropsType = {
+    deployments: Record<string, DeploymentType>;
+    isDeploymentsLoading: boolean;
+};
+
+const DeploymentList: React.FC<MapStatePropsType> = ({ deployments, isDeploymentsLoading }) => {
     useEffect(() => {
         getDeployments();
     }, []);
@@ -40,13 +49,11 @@ const DeploymentList = ({ deployments, isDeploymentsLoading }) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType): MapStatePropsType => {
     return {
         deployments: state.deployments.deployments,
         isDeploymentsLoading: state.deployments.isDeploymentsLoading
-    };
+    }
 };
 
 export default connect(mapStateToProps)(DeploymentList);
-
-

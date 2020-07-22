@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { connect } from "react-redux";
 
 import { Container, Row, Col, Form, Input, Button } from "reactstrap";
 
 import { addDeployment } from "../../../../actions/deploymentActions";
 
+// @ts-ignore
 import styles from "./add-deployment-form.module.scss";
 
-const AddDeploymentForm = ({ deploymentTemplates, isDeploymentTemplatesLoading }) => {
-    const [templateName, setTemplateName] = useState("");
-    const [templateVersion, setTemplateVersion] = useState("");
-    const [templateUrl, setTemplateUrl] = useState("");
-    const [selectedDeploymentTemplateId, setSelectedDeploymentTemplateId] = useState("");
+import { RootStateType } from "../../../../reducers";
+import { DeploymentTemplateType } from "../../../../types/deploymentTemplateType";
+
+type MapStatePropsType = {
+    deploymentTemplates: Record<string, DeploymentTemplateType>,
+    isDeploymentTemplatesLoading: boolean
+};
+
+const AddDeploymentForm: React.FC<MapStatePropsType> = ({ deploymentTemplates, isDeploymentTemplatesLoading }) => {
+    const [templateName, setTemplateName] = useState<string>("");
+    const [templateVersion, setTemplateVersion] = useState<string>("");
+    const [templateUrl, setTemplateUrl] = useState<string>("");
+    const [selectedDeploymentTemplateId, setSelectedDeploymentTemplateId] = useState<string>("");
 
     return (
         <Container tag="section" className={styles.addDeploymentForm}>
@@ -27,10 +36,10 @@ const AddDeploymentForm = ({ deploymentTemplates, isDeploymentTemplatesLoading }
             {
                 (!isDeploymentTemplatesLoading && !!Object.keys(deploymentTemplates).length)
                 && <Form
-                    onSubmit={(e) => {
+                    onSubmit={(e: FormEvent<HTMLFormElement>) => {
                         e.preventDefault();
 
-                        addDeployment({ templateName, templateVersion, templateUrl });
+                        addDeployment({ templateName, version: templateVersion, url: templateUrl });
 
                         setTemplateName("");
                         setTemplateVersion("");
@@ -50,7 +59,7 @@ const AddDeploymentForm = ({ deploymentTemplates, isDeploymentTemplatesLoading }
                                 value={selectedDeploymentTemplateId}
                                 placeholder="Select name"
                                 required
-                                onChange={(e) => {
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     setTemplateName(deploymentTemplates[e.target.value].name);
                                     setSelectedDeploymentTemplateId(e.target.value);
                                 }}
@@ -78,7 +87,7 @@ const AddDeploymentForm = ({ deploymentTemplates, isDeploymentTemplatesLoading }
                                 placeholder="Select version"
                                 disabled={!templateName}
                                 required
-                                onChange={(e) => setTemplateVersion(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => setTemplateVersion(e.target.value)}
                             >
                                 <option hidden />
                                 {
@@ -103,7 +112,7 @@ const AddDeploymentForm = ({ deploymentTemplates, isDeploymentTemplatesLoading }
                                 value={templateUrl}
                                 placeholder="Enter url"
                                 required
-                                onChange={(e) => setTemplateUrl(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => setTemplateUrl(e.target.value)}
                             />
                         </Col>
                     </Row>
@@ -146,13 +155,11 @@ const AddDeploymentForm = ({ deploymentTemplates, isDeploymentTemplatesLoading }
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType): MapStatePropsType => {
     return {
         deploymentTemplates: state.deploymentTemplates.deploymentTemplates,
-        isDeploymentTemplatesLoading: state.deploymentTemplates.isDeploymentTemplatesLoading,
-        deploymentAdditionCountdowns: state.deploymentAdditionCountdowns.deploymentAdditionCountdowns,
+        isDeploymentTemplatesLoading: state.deploymentTemplates.isDeploymentTemplatesLoading
     };
 };
 
 export default connect(mapStateToProps)(AddDeploymentForm);
-

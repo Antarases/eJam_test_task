@@ -1,8 +1,14 @@
+import { DeploymentAdditionCountdownType } from "../types/deploymentAdditionCountdownType";
+
+type DeploymentAdditionCountdownsStateType = {
+    deploymentAdditionCountdowns: Record<string, DeploymentAdditionCountdownType>;
+};
+
 const initialState = {
     deploymentAdditionCountdowns: {}
 };
 
-export default function deploymentAdditionCountdowns(state = initialState, action ) {
+export default function deploymentAdditionCountdowns(state: DeploymentAdditionCountdownsStateType = initialState, action ): DeploymentAdditionCountdownsStateType {
     switch (action.type) {
         case "DEPLOYMENT_ADDITION_COUNTDOWNS__ADD_COUNTDOWN": {
             const { countdownId, countdownEndTime, countdownText, callback } = action;

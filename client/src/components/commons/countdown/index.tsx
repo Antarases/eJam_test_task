@@ -1,7 +1,14 @@
 import React  from "react";
 import CountdownComponent, { zeroPad } from 'react-countdown';
 
+// @ts-ignore
 import styles from "./countdown.module.scss";
+
+import { DeploymentAdditionCountdownType } from "../../../types/deploymentAdditionCountdownType";
+
+type PropsType = {
+    countdown: DeploymentAdditionCountdownType
+};
 
 const renderer = ({ minutes, seconds, milliseconds, completed, props }) => {
     if (completed) {
@@ -16,7 +23,7 @@ const renderer = ({ minutes, seconds, milliseconds, completed, props }) => {
     }
 };
 
-const Countdown = ({ countdown }) => {
+const Countdown: React.FC<PropsType> = ({ countdown }) => {
     return (
         <section className={styles.countdownContainer}>
             <CountdownComponent
@@ -26,6 +33,7 @@ const Countdown = ({ countdown }) => {
                 precision={3}
                 renderer={renderer}
                 onComplete={countdown.callback}
+                // @ts-ignore
                 countdownText={countdown.countdownText}
             />
         </section>

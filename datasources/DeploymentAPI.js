@@ -7,12 +7,12 @@ module.exports = {
         return await Deployment.find({});
     },
     addDeployment: async (deployment) => {
-        const {templateName, templateVersion, templateUrl } = deployment;
+        const {templateName, version, url } = deployment;
 
         return await new Deployment({
-            url: templateUrl,
             templateName,
-            version: templateVersion
+            version,
+            url
         }).save();
     },
     deleteDeployment: async (deploymentId) => {

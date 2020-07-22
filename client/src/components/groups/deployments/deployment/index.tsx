@@ -5,9 +5,16 @@ import { Button } from "reactstrap";
 
 import { deleteDeploymentById } from "../../../../actions/deploymentActions";
 
+// @ts-ignore
 import styles from "./deployment.module.scss";
 
-const Deployment = ({ deployment }) => {
+import { DeploymentType } from "../../../../types/deploymentType";
+
+type PropsType = {
+    deployment: DeploymentType
+};
+
+const Deployment: React.FC<PropsType> = ({ deployment }) => {
     return (
         <section className={styles.deploymentContainer}>
             <section className={styles.deploymentInfoContainer}>
@@ -50,6 +57,3 @@ const Deployment = ({ deployment }) => {
 };
 
 export default Deployment;
-
-
-

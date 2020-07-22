@@ -2,14 +2,15 @@ import axios from "axios";
 import { dispatch } from "../store/configureStore";
 
 import { addDeploymentAdditionCountdown } from "./deploymentAdditionCountdownsActions";
+import { DeploymentType, DeploymentInputType, DeploymentsResponseType, DeploymentResponseType} from "../types/deploymentType";
 
-export const getDeployments = async () => {
+export const getDeployments: () => Promise<void> = async () => {
     try {
         dispatch({ type: "DEPLOYMENTS__SET_IS_DEPLOYMENTS_LOADING", isDeploymentsLoading: true });
 
-        const res = await axios.get("/deployments");
+        const res = await axios.get<DeploymentsResponseType>("/deployments");
 
-        const deployments = res.data.deployments.reduce((map, obj) => {
+        const deployments: Record<string, DeploymentType> = res.data.deployments.reduce((map, obj) => {
             map[obj.id] = obj;
 
             return map;
@@ -25,9 +26,9 @@ export const getDeployments = async () => {
     }
 };
 
-export const addDeployment = async (deployment) => {
+export const addDeployment: (deployment: DeploymentInputType) => Promise<void> = async (deployment) => {
     try {
-        const res = await axios.put("/deployment", { deployment });
+        const res = await axios.put<DeploymentResponseType>("/deployment", {deployment});
 
         addDeploymentAdditionCountdown({
             countdownText: "Deployment will be shown after:",
@@ -38,9 +39,9 @@ export const addDeployment = async (deployment) => {
     }
 };
 
-export const deleteDeploymentById = async (deploymentId) => {
+export const deleteDeploymentById: (deploymentId: string) => Promise<void> = async (deploymentId) => {
     try {
-        const res = await axios.delete("/deployment", { data: { deploymentId } });
+        const res = await axios.delete<DeploymentResponseType>("/deployment", { data: { deploymentId } });
 
         dispatch({ type: "DEPLOYMENTS__DELETE_DEPLOYMENT_BY_ID", deploymentId: res.data.deployment.id });
     } catch (error) {

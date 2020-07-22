@@ -6,6 +6,7 @@ import DeploymentAdditionCountdownList from "../../groups/deployments/deployment
 
 import { getDeploymentTemplates } from "../../../actions/deploymentTemplatesActions";
 
+// @ts-ignore
 import styles from "./app.module.scss";
 
 const App = () => {
