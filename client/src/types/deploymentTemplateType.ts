@@ -5,5 +5,6 @@ export type DeploymentTemplateType = {
 };
 
 export type DeploymentTemplatesResponseType = {
-    deploymentTemplates: Array<DeploymentTemplateType>
+    deploymentTemplates: Array<DeploymentTemplateType>,
+    code: number
 }

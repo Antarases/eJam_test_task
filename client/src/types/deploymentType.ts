@@ -9,9 +9,11 @@ export type DeploymentType = {
 export type DeploymentInputType = Omit<DeploymentType, "id" | "deployedAt">;
 
 export type DeploymentsResponseType = {
-    deployments: Array<DeploymentType>
+    deployments: Array<DeploymentType>,
+    code: number
 }
 
 export type DeploymentResponseType = {
-    deployment: DeploymentType
+    deployment: DeploymentType,
+    code: number
 }
